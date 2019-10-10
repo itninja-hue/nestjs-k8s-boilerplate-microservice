@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-microservice-benjamin
+  namespace: box-dev
+data:
+  database-host: database-microservice-benjamin
+  eventstore-host: eventstore-microservice-benjamin
+  database-port: "3306"
+  database-db: b2h-db 
+...

@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.eventstore.ingress.name}}
+  namespace: {{.Values.namespace}}
+  annotations:
+    nginx.org/websocket-services: "eventstore-gui-microservice-benjamin"
+spec:
+  rules:
+  - host: {{.Values.eventstore.ingress.host}}
+    http:
+      paths:
+      - backend:
+          serviceName: {{.Values.eventstore.serviceGui.name}}
+          servicePort: {{.Values.eventstore.serviceGui.port}}
+...

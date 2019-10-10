@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.eventstore.serviceDatabase.name}}
+  namespace: {{.Values.namespace}}
+spec:
+  selector:
+    app: box
+    type: eventstore
+  ports:
+    - protocol: TCP
+      port: {{.Values.eventstore.serviceDatabase.port}}
+      targetPort: {{.Values.eventstore.serviceDatabase.port}}
+...

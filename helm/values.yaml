@@ -1,0 +1,48 @@
+benjamin:
+  deployment:
+    containerName: benjamin
+    name: microservice-benjamin
+    scale: 2
+    tag: d39f2d8
+  ingress:
+    host: box2home.eu
+    ingressName: ingress-microservice-benjamin
+  service:
+    name: service-microservice-benjamin
+    servicePort: 80
+    serviceTargetPort: 3000
+containerName: microservice-benjamin
+database:
+  deployment:
+    containerName: database
+    image: mysql:5.7
+    name: database
+    scale: 1
+  pvc:
+    name: mysql-pv-claim
+    storage: 20Gi
+  service:
+    name: database-microservice-benjamin
+    port: 3306
+deploymentName: microservice-benjamin
+eventstore:
+  deployment:
+    containerName: eventstore
+    image: eventstore/eventstore:release-5.0.2
+    name: eventstore
+    scale: 1
+  ingress:
+    host: eventstore.box2home.eu
+    name: eventstore-ingress-microservice-benjamin
+  pvc:
+    name: eventstore-pv-claim
+    storage: 20Gi
+  serviceDatabase:
+    name: eventstore-database-microservice-benjamin
+    port: 1113
+  serviceGui:
+    name: eventstore-gui-microservice-benjamin
+    port: 80
+    targetPort: 2113
+general:
+  namespace: box-dev

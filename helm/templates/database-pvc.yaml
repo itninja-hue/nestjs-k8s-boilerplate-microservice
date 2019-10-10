@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{.Values.database.pvc.name}}
+  namespace: {{.Values.namespace}}
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName:
+  resources:
+    requests:
+      storage: {{.Values.database.pvc.storage}}
+...
