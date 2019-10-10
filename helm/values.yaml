@@ -18,6 +18,7 @@ database:
     image: mysql:5.7
     name: database
     scale: 1
+    database: b2h-db
   pvc:
     name: mysql-pv-claim
     storage: 20Gi
@@ -46,3 +47,6 @@ eventstore:
     targetPort: 2113
 general:
   namespace: box-dev
+  microserviceName: benjamin
+configMap:
+  name: configmap-microservice-benjamin

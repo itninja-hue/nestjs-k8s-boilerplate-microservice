@@ -6,7 +6,7 @@ metadata:
   namespace: {{.Values.namespace}}
 spec:
   selector:
-    app: box
+    app: {{.Values.general.microserviceName}}
     type: eventstore
   ports:
     - protocol: TCP
