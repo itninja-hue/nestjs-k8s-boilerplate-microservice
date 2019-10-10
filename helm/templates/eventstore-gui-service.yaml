@@ -3,10 +3,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{.Values.eventstore.serviceGui.name}}
-  namespace: {{.Values.namespace}}
+  namespace: {{.Values.general.namespace}}
 spec:
   selector:
-    app: box
+    app: {{.Values.general.microserviceName}}
     type: eventstore
   ports:
     - protocol: TCP

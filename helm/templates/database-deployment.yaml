@@ -3,20 +3,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{.Values.database.deployment.name}}
-  namespace: {{.Values.namespace}} 
+  namespace: {{.Values.general.namespace}}
   labels:
-    app: box
+    app: {{.Values.general.microserviceName}}
     type: database
 spec:
   replicas: {{.Values.database.deployment.scale}}
   selector:
     matchLabels:
-      app: box
+      app: {{.Values.general.microserviceName}}
       type: database
   template:
     metadata:
       labels:
-        app: box
+        app: {{.Values.general.microserviceName}}
         type: database
     spec:
       containers:
@@ -29,7 +29,10 @@ spec:
               name: database-credentials
               key: database-password
         - name: MYSQL_DATABASE
-          value: test-database
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: database-db
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql

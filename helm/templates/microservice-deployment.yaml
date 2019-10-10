@@ -28,11 +28,6 @@ spec:
             configMapKeyRef:
               name: {{.Values.configMap.name}}
               key: database-host
-        - name: EVENT_STORE_HOSTNAME
-          valueFrom:
-            configMapKeyRef:
-              name: {{.Values.configMap.name}}
-              key: eventstore-host
         - name: MYSQL_USERNAME
           valueFrom:
             secretKeyRef:
@@ -53,6 +48,11 @@ spec:
             configMapKeyRef:
               name: {{.Values.configMap.name}}
               key: database-db
+        - name: EVENT_STORE_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: eventstore-host      
         - name : EVENT_STORE_CREDENTIALS_USERNAME
           valueFrom:
             secretKeyRef:

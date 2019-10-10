@@ -3,20 +3,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{.Values.eventstore.deployment.name}}
-  namespace: {{.Values.namespace}}
+  namespace: {{.Values.general.namespace}}
   labels:
-    app: box
+    app: {{.Values.general.microserviceName}}
     type: eventstore
 spec:
   replicas: {{.Values.eventstore.deployment.scale}}
   selector:
     matchLabels:
-      app: box
+      app: {{.Values.general.microserviceName}}
       type: eventstore
   template:
     metadata:
       labels:
-        app: box
+        app: {{.Values.general.microserviceName}}
         type: eventstore
     spec:
       containers:

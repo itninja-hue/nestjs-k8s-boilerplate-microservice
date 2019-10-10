@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{.Values.eventstore.pvc.name}}
-  namespace: {{.Values.namespace}}
+  namespace: {{.Values.general.namespace}}
 spec:
   accessModes:
     - ReadWriteMany
