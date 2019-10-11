@@ -6,7 +6,7 @@ metadata:
     app: {{.Values.general.microserviceName}}
     type: {{.Values.general.microserviceName}}
   name: {{.Values.benjamin.deployment.name}}
-  namespace: {{.Values.general.microserviceName}}
+  namespace: {{.Values.general.namespace}}
 spec:
   replicas: {{.Values.benjamin.deployment.scale}}
   selector:
