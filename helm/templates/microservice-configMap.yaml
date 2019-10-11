@@ -7,6 +7,6 @@ metadata:
 data:
   database-host: {{.Values.database.deployment.name}}
   eventstore-host: {{.Values.eventstore.deployment.name}}
-  database-port: {{.Values.database.service.port}}
+  database-port: "{{.Values.database.service.port}}"
   database-db: {{.Values.database.deployment.database}}
 ...
