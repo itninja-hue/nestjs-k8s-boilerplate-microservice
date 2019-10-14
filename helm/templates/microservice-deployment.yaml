@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   labels:
     app: {{.Values.general.microserviceName}}
-    type: {{.Values.general.microserviceName}}
+    type: {{.Values.general.type}}
   name: {{.Values.benjamin.deployment.name}}
   namespace: {{.Values.general.namespace}}
 spec:
@@ -12,17 +12,22 @@ spec:
   selector:
     matchLabels:
       app: {{.Values.general.microserviceName}}
-      type: {{.Values.general.microserviceName}}
+      type: {{.Values.general.type}}
   template:
     metadata:
       labels:
         app: {{.Values.general.microserviceName}}
-        type: {{.Values.general.microserviceName}}
+        type: {{.Values.general.type}}
     spec:
       containers:
       - image: itninjahue/box:{{.Values.benjamin.deployment.tag}}
         name: {{.Values.benjamin.deployment.containerName}}
         env:
+        - name: HOST
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: microservice-host
         - name: MYSQL_HOST
           valueFrom:
             configMapKeyRef:

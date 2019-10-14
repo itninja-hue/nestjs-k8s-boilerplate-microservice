@@ -3,9 +3,9 @@ benjamin:
     containerName: benjamin
     name: microservice-benjamin
     scale: 2
-    tag: d39f2d8
+    tag: v1.0.0
   ingress:
-    host: box2home.eu
+    host: box.example.com
     ingressName: ingress-microservice-benjamin
   service:
     name: service-microservice-benjamin
@@ -31,7 +31,7 @@ eventstore:
     name: eventstore
     scale: 1
   ingress:
-    host: eventstore.box2home.eu
+    host: eventstore.example.com
     name: eventstore-ingress-microservice-benjamin
   pvc:
     name: eventstore-pv-claim
@@ -46,5 +46,6 @@ eventstore:
 general:
   namespace: box-dev
   microserviceName: benjamin
+  type: microservice
 configMap:
   name: configmap-microservice-benjamin

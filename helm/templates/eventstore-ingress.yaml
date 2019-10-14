@@ -5,7 +5,7 @@ metadata:
   name: {{.Values.eventstore.ingress.name}}
   namespace: {{.Values.general.namespace}}
   annotations:
-    nginx.org/websocket-services: "eventstore-gui-microservice-benjamin"
+    nginx.org/websocket-services: {{.Values.eventstore.serviceGui.name}}
 spec:
   rules:
   - host: {{.Values.eventstore.ingress.host}}

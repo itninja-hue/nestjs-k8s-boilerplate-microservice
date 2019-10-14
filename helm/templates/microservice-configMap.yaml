@@ -5,8 +5,9 @@ metadata:
   name: {{.Values.configMap.name}}
   namespace: {{.Values.general.namespace}}
 data:
-  database-host: {{.Values.database.deployment.name}}
-  eventstore-host: {{.Values.eventstore.deployment.name}}
+  database-host: {{.Values.database.service.name}}
+  eventstore-host: {{.Values.eventstore.serviceDatabase.name}}
   database-port: "{{.Values.database.service.port}}"
   database-db: {{.Values.database.deployment.database}}
+  microservice-host: 0.0.0.0
 ...
