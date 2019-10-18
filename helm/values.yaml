@@ -5,7 +5,7 @@ benjamin:
     scale: 2
     tag: v1.0.0
   ingress:
-    host: box.example.com
+    host: www.box.example.com
     ingressName: ingress-microservice-benjamin
   service:
     name: service-microservice-benjamin

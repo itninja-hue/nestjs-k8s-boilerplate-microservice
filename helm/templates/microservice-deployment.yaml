@@ -22,6 +22,13 @@ spec:
       containers:
       - image: itninjahue/box:{{.Values.benjamin.deployment.tag}}
         name: {{.Values.benjamin.deployment.containerName}}
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "250m"
+          limits:
+            memory: "150Mi"
+            cpu: "300m"
         env:
         - name: HOST
           valueFrom:

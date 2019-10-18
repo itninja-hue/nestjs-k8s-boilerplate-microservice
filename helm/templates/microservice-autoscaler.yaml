@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: autoscaler-microservice-benjamin
+  namespace: {{.Values.general.namespace}}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{.Values.benjamin.deployment.name}}
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
