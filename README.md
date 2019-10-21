@@ -3,10 +3,9 @@ kubernetes microserviceapplication  boilerplate based on Nest, a framework TypeS
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+These instructions will get you a copy of the project up and running on yout kubernetes cluster.
 
 ### Prerequisites
-* Kubernetes cluster
 * Tiller deployed on the kubernetes cluster
 * Ingress controller (Nginx,Traefik..)
 * Storage Class
@@ -29,3 +28,13 @@ These instructions will get you a copy of the project up and running on your loc
 helm  install  helm/ --tiller-namespace box-dev --namespace box-dev --name microservice-benjamin
 
 ```
+
+### Description
+This kuberntes application will deploy:
+* MySQL deployment.
+* Expose MySQL as A clusterIp Service.
+* Eventstore deployment. 
+* Expose store as A clusterIp Service.
+* Expose EventStore Gui as Ingress.
+* Microservice deployment.
+* Expose Microservice as Ingress.
