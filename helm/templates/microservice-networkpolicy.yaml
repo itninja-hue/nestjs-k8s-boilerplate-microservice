@@ -1,0 +1,93 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: microservice-allow-in-3000
+  namespace: {{.Values.general.namespace}}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{.Values.general.microserviceName}}
+      type: {{.Values.general.type}}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          space: nginx-ingress
+      podSelector:
+        matchLabels:
+          app: nginx-ingress
+    ports:
+    - protocol: TCP
+      port: {{.Values.benjamin.service.serviceTargetPort}}
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: microservice-allow-out-3306
+  namespace: {{.Values.general.namespace}}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{.Values.general.microserviceName}}
+      type: {{.Values.general.type}}         
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          space: microservice
+      podSelector:
+        matchLabels:
+          app: {{.Values.general.microserviceName}}
+          type: database
+    ports:
+    - protocol: TCP
+      port: {{.Values.database.service.port}}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: microservice-allow-out-53
+  namespace: {{.Values.general.namespace}}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{.Values.general.microserviceName}}
+      type: {{.Values.general.type}}         
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    ports:
+    - protocol: UDP
+      port: 53
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: database-allow-in-3306
+  namespace: {{.Values.general.namespace}}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{.Values.general.microserviceName}}
+      type: database         
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          space: microservice
+      podSelector:
+        matchLabels:
+          app: {{.Values.general.microserviceName}}
+          type: {{.Values.general.type}}
+    ports:
+    - protocol: TCP
+      port: {{.Values.database.service.port}}
