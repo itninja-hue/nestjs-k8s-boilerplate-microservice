@@ -5,10 +5,10 @@ metadata:
   labels:
     app: {{.Values.general.microserviceName}}
     type: {{.Values.general.type}}
-  name: {{.Values.benjamin.deployment.name}}
+  name: {{.Values.microservice.deployment.name}}
   namespace: {{.Values.general.namespace}}
 spec:
-  replicas: {{.Values.benjamin.deployment.scale}}
+  replicas: {{.Values.microservice.deployment.scale}}
   selector:
     matchLabels:
       app: {{.Values.general.microserviceName}}
@@ -20,15 +20,15 @@ spec:
         type: {{.Values.general.type}}
     spec:
       containers:
-      - image: itninjahue/box:{{.Values.benjamin.deployment.tag}}
-        name: {{.Values.benjamin.deployment.containerName}}
+      - image: itninjahue/box:{{.Values.microservice.deployment.tag}}
+        name: {{.Values.microservice.deployment.containerName}}
         resources:
           requests:
             memory: "100Mi"
-            cpu: "250m"
+            cpu: 0.2
           limits:
             memory: "150Mi"
-            cpu: "300m"
+            cpu: 0.3
         env:
         - name: HOST
           valueFrom:
@@ -43,12 +43,12 @@ spec:
         - name: MYSQL_USERNAME
           valueFrom:
             secretKeyRef:
-              name: database-credentials
+              name: {{.Values.database.secret.name}}
               key: database-user
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: database-credentials
+              name: {{.Values.database.secret.name}}
               key: database-password
         - name: MYSQL_PORT
           valueFrom:
@@ -68,12 +68,12 @@ spec:
         - name : EVENT_STORE_CREDENTIALS_USERNAME
           valueFrom:
             secretKeyRef:
-              name: eventstore-credentials
+              name: {{.Values.eventstore.secret.name}}
               key: eventstore-user
         - name: EVENT_STORE_CREDENTIALS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: eventstore-credentials
+              name: {{.Values.eventstore.secret.name}}
               key: eventstore-password
       imagePullSecrets:
       - name: regcred
