@@ -6,7 +6,7 @@ metadata:
   namespace: {{.Values.general.namespace}}
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName:
   resources:
     requests:
