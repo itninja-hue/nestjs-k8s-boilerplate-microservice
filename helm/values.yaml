@@ -1,36 +1,63 @@
-benjamin:
-  deployment:
-    containerName: benjamin
-    name: microservice-benjamin
-    scale: 2
-    tag: v1.2.0
-  ingress:
-    host: box.example.com
-    ingressName: ingress-microservice-benjamin
-  service:
-    name: service-microservice-benjamin
-    servicePort: 80
-    serviceTargetPort: 3000
+configMap:
+  name: microservice-template-configmap
 database:
   deployment:
     containerName: database
+    database: b2h-db
     image: mysql:5.7
     name: database
     scale: 1
-    database: b2h-db
   pvc:
     name: mysql-pv-claim
     storage: 20Gi
+  secret:
+    name: database-credentials
+    databaseUser:
+    databasePassword:
   service:
-    name: database-microservice-benjamin
+    name: database-microservice-rating
     port: 3306
 eventstore:
+  secret:
+    name: eventstore-credentials
+    eventstoreUser: 
+    eventstorePassword:
   serviceDatabase:
-    name: eventstore.eventstore.svc.cluster.local
+    dev:
+      name: dev-eventstore-db-svc.dev-eventstore.svc.cluster.local
     port: 1113
+    preprod:
+      name: preprod-eventstore-db-svc.preprod-eventstore.svc.cluster.local
+    prod:
+      name: prod-eventstore-db-svc.prod-eventstore.svc.cluster.local
 general:
-  namespace: box-dev
-  microserviceName: benjamin
+  microserviceName: microservice-template
+  namespace: dev-microservice-template
   type: microservice
-configMap:
-  name: configmap-microservice-benjamin
+microservice:
+  deployment:
+    containerName: microservice-template
+    name: microservice-template
+    scale: 1
+    tag: v1.0.0
+  ingress:
+    devhost: dev-template.example.com
+    ingressName: ingress-microservice-template
+    preprodhost: preprod-template.example.com
+    prod: prod-template.example.com
+  secrets:
+    avisverifie:
+      name: avis-verifie
+    avisverifiecron:
+      name: avis-verifie-cron
+  service:
+    name: service-microservice-template
+    servicePort: 80
+    serviceTargetPort: 3000
+  autoscaler:
+    name: autoscaler-microservice-microservice
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+privateDockerRegistry:
+  dockerconfigjson: 
