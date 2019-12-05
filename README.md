@@ -1,4 +1,4 @@
-# nestjs-k8s-boilerplate-microservice
+# Kubernetes-nestjs-microservice-application-boilerplate
 kubernetes application boilerplate for https://github.com/0xb4lamx/nestjs-boilerplate-microservice .
 
 ## Getting Started
