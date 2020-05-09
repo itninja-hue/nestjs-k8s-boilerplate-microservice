@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-microservice-template
+spec:
+  destination:
+    namespace: dev-microservice-template
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: dev
+    repoURL: 'https://github.com/itninja-hue/nestjs-k8s-boilerplate-microservice'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

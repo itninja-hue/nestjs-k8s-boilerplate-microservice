@@ -14,10 +14,12 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          space: nginx-ingress
+          app.kubernetes.io/name: ingress-nginx
+          app.kubernetes.io/part-of: ingress-nginx
       podSelector:
         matchLabels:
-          app: nginx-ingress
+          app.kubernetes.io/name: ingress-nginx
+          app.kubernetes.io/part-of: ingress-nginx
     ports:
     - protocol: TCP
       port: {{.Values.microservice.service.serviceTargetPort}}
@@ -39,7 +41,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          space: {{.Values.general.microserviceName}}
+          space: dev-microservice-notification
       podSelector:
         matchLabels:
           app: {{.Values.general.microserviceName}}
@@ -83,7 +85,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          space: microservice
+          space: dev-microservice-notification
       podSelector:
         matchLabels:
           app: {{.Values.general.microserviceName}}

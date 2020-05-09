@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.apm.configmap.name}}
+  namespace: {{.Values.general.namespace}}
+data:
+  apm-server-host: {{.Values.apm.configmap.host}}
+  apm-service-name: {{.Values.general.namespace}}
+  apm-log-level: {{.Values.apm.configmap.logLevel}}
+...

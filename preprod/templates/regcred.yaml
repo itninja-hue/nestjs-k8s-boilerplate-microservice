@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+  namespace: {{.Values.general.namespace}}
+data:
+  .dockerconfigjson: {{.Values.privateDockerRegistry.dockerconfigjson}}
+type: kubernetes.io/dockerconfigjson
+...

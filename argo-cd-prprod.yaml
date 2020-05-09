@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: preprod-microservice-template
+spec:
+  destination:
+    namespace: preprod-microservice-template
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: preprod
+    repoURL: 'https://github.com/itninja-hue/nestjs-k8s-boilerplate-microservice'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

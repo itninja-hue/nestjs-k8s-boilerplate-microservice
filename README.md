@@ -21,13 +21,26 @@ In Values.yaml:
     * MYSQL Database.
     * Eventstore.
     * Credentials for private dockerhub.
-* Configure and deploy needed namespace.
+* create needed namespaces. for this example you can type:
+```shell
+kubectl create ns dev-microservice-template
+kubectl create ns preprod-microservice-template
+kubectl create ns prod-microservice-template
+```
 
 ### Deployment
+#### ArgoCD
+
+If using ArgoCD apply argocd yaml files representing each an environment.
+```shell
+kubectl apply -f argo-cd-dev.yaml
+```
  
+#### helm3
+
 ```shell
 
-helm  install  helm/ --tiller-namespace dev-microservice-boilerplate --namespace dev-microservice-boilerplate --name dev-microservice-boilerplate
+helm  install  dev/ dev-microservice-boilerplate --namespace dev-microservice-template --name dev-microservice-template
 
 ```
 

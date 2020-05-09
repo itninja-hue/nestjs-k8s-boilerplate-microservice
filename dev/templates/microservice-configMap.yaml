@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.configMap.name}}
+  namespace: {{.Values.general.namespace}}
+data:
+  eventstore-host: {{.Values.eventstore.serviceDatabase.name}}
+  eventstore-tcp-port: "{{.Values.eventstore.serviceDatabase.port}}"
+  database-port: "{{.Values.database.configmap.port}}"
+  database-db: {{.Values.database.configmap.databaseName}}
+  database-host: "{{.Values.database.configmap.host}}"
+  microservice-host: "{{.Values.general.host}}"
+  microservice-port: "{{.Values.general.port}}"
+...

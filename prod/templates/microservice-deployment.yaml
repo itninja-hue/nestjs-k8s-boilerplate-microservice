@@ -1,0 +1,106 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{.Values.general.microserviceName}}
+    type: {{.Values.general.type}}
+  name: {{.Values.microservice.deployment.name}}
+  namespace: {{.Values.general.namespace}}
+spec:
+  replicas: {{.Values.microservice.deployment.scale}}
+  selector:
+    matchLabels:
+      app: {{.Values.general.microserviceName}}
+      type: {{.Values.general.type}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.general.microserviceName}}
+        type: {{.Values.general.type}}
+    spec:
+      containers:
+      - image: itninjahue/box:{{.Values.microservice.deployment.tag}}
+        name: {{.Values.microservice.deployment.containerName}}
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: 0.1
+          limits:
+            memory: "150Mi"
+            cpu: 0.2
+        env:
+        - name: HOST
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: microservice-host
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: database-host
+        - name: MYSQL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.database.secret.name}}
+              key: database-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.database.secret.name}}
+              key: database-password
+        - name: MYSQL_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: database-port
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: database-db
+        - name: EVENT_STORE_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: eventstore-host      
+        - name : EVENT_STORE_CREDENTIALS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.eventstore.secret.name}}
+              key: eventstore-user
+        - name: EVENT_STORE_CREDENTIALS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.eventstore.secret.name}}
+              key: eventstore-password
+        - name: SWAGGER_SCHEME
+          value: https
+        - name: SWAGGER_VERSION
+          value: {{.Values.microservice.deployment.tag}}
+        - name: SWAGGER_TITLE
+          value: {{.Values.general.microserviceName}}
+        - name: ELASTIC_APM_SERVER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.apm.configmap.name}}
+              key: apm-server-host
+        - name: ELASTIC_APM_SERVICE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.apm.configmap.name}}
+              key: apm-service-name
+        - name: ELASTIC_APM_LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.apm.configmap.name}}
+              key: apm-log-level
+        - name: ELASTIC_APM_SECRET_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.apm.secrets.name}}
+              key: apm-secret-token
+      imagePullSecrets:
+      - name: regcred
+...

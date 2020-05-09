@@ -9,47 +9,35 @@ database:
     scale: 1
   pvc:
     name: mysql-pv-claim
-    storage: 20Gi
+    storage: 5Gi
   secret:
     name: database-credentials
-    databaseUser:
-    databasePassword:
+    username: MYSQL_USERNAME
+    password: MYSQL_PASSWORD
   service:
     name: database-microservice-rating
     port: 3306
 eventstore:
+  user: EVENTSTORE_USER
+  password: EVENTSTORE_PASSWORD
   secret:
     name: eventstore-credentials
-    eventstoreUser: 
-    eventstorePassword:
   serviceDatabase:
-    dev:
-      name: dev-eventstore-db-svc.dev-eventstore.svc.cluster.local
+    name: prod-eventstore-db-svc.prod-eventstore.svc.cluster.local
     port: 1113
-    preprod:
-      name: preprod-eventstore-db-svc.preprod-eventstore.svc.cluster.local
-    prod:
-      name: prod-eventstore-db-svc.prod-eventstore.svc.cluster.local
 general:
   microserviceName: microservice-template
-  namespace: dev-microservice-template
+  namespace: prod-microservice-template
   type: microservice
+  port: 3000
 microservice:
   deployment:
     containerName: microservice-template
     name: microservice-template
-    scale: 1
     tag: v1.0.0
   ingress:
-    devhost: dev-template.example.com
+    host: preprod-template.example.com
     ingressName: ingress-microservice-template
-    preprodhost: preprod-template.example.com
-    prod: prod-template.example.com
-  secrets:
-    avisverifie:
-      name: avis-verifie
-    avisverifiecron:
-      name: avis-verifie-cron
   service:
     name: service-microservice-template
     servicePort: 80
@@ -59,5 +47,13 @@ microservice:
     minReplicas: 1
     maxReplicas: 3
     targetCPUUtilizationPercentage: 80
+apm:
+  secrets:
+    name: apm-secret-token
+    token: APM-TOKEN-BASE64ENCODED
+  configmap:
+    name: apm-configmap
+    host: APM-HOST
+    logLevel: error
 privateDockerRegistry:
   dockerconfigjson: 

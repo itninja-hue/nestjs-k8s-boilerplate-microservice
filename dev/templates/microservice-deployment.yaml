@@ -25,10 +25,10 @@ spec:
         resources:
           requests:
             memory: "100Mi"
-            cpu: 0.2
+            cpu: 0.1
           limits:
             memory: "150Mi"
-            cpu: 0.3
+            cpu: 0.2
         env:
         - name: HOST
           valueFrom:
@@ -75,6 +75,32 @@ spec:
             secretKeyRef:
               name: {{.Values.eventstore.secret.name}}
               key: eventstore-password
+        - name: SWAGGER_SCHEME
+          value: https
+        - name: SWAGGER_VERSION
+          value: {{.Values.microservice.deployment.tag}}
+        - name: SWAGGER_TITLE
+          value: {{.Values.general.microserviceName}}
+        - name: ELASTIC_APM_SERVER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.apm.configmap.name}}
+              key: apm-server-host
+        - name: ELASTIC_APM_SERVICE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.apm.configmap.name}}
+              key: apm-service-name
+        - name: ELASTIC_APM_LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.apm.configmap.name}}
+              key: apm-log-level
+        - name: ELASTIC_APM_SECRET_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.apm.secrets.name}}
+              key: apm-secret-token
       imagePullSecrets:
       - name: regcred
 ...

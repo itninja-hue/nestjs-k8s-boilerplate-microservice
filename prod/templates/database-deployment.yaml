@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.database.deployment.name}}
+  namespace: {{.Values.general.namespace}}
+  labels:
+    app: {{.Values.general.microserviceName}}
+    type: database
+spec:
+  replicas: {{.Values.database.deployment.scale}}
+  selector:
+    matchLabels:
+      app: {{.Values.general.microserviceName}}
+      type: database
+  template:
+    metadata:
+      labels:
+        app: {{.Values.general.microserviceName}}
+        type: database
+    spec:
+      containers:
+      - name: {{.Values.database.deployment.containerName}}
+        image: {{.Values.database.deployment.image}}
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: database-password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: {{.Values.configMap.name}}
+              key: database-db
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+          subPath: mysqldata
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+...

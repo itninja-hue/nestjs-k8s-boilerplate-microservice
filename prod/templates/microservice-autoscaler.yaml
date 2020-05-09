@@ -1,0 +1,15 @@
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{.Values.microservice.autoscaler.name}}
+  namespace: {{.Values.general.namespace}}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{.Values.microservice.deployment.name}}
+  minReplicas: {{.Values.microservice.autoscaler.minReplicas}}
+  maxReplicas: {{.Values.microservice.autoscaler.maxReplicas}}
+  targetCPUUtilizationPercentage: {{.Values.microservice.autoscaler.targetCPUUtilizationPercentage}}
+...

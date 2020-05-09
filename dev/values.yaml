@@ -1,0 +1,59 @@
+configMap:
+  name: microservice-template-configmap
+database:
+  deployment:
+    containerName: database
+    database: b2h-db
+    image: mysql:5.7
+    name: database
+    scale: 1
+  pvc:
+    name: mysql-pv-claim
+    storage: 5Gi
+  secret:
+    name: database-credentials
+    username: MYSQL_USERNAME
+    password: MYSQL_PASSWORD
+  service:
+    name: database-microservice-rating
+    port: 3306
+eventstore:
+  user: EVENTSTORE_USER
+  password: EVENTSTORE_PASSWORD
+  secret:
+    name: eventstore-credentials
+  serviceDatabase:
+    name: dev-eventstore-db-svc.dev-eventstore.svc.cluster.local
+    port: 1113
+general:
+  microserviceName: microservice-template
+  namespace: dev-microservice-template
+  type: microservice
+  port: 3000
+microservice:
+  deployment:
+    containerName: microservice-template
+    name: microservice-template
+    tag: v1.0.0
+  ingress:
+    host: dev-template.example.com
+    ingressName: ingress-microservice-template
+  service:
+    name: service-microservice-template
+    servicePort: 80
+    serviceTargetPort: 3000
+  autoscaler:
+    name: autoscaler-microservice-microservice
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+apm:
+  secrets:
+    name: apm-secret-token
+    token: APM-TOKEN-BASE64ENCODED
+  configmap:
+    name: apm-configmap
+    host: APM-HOST
+    logLevel: error
+privateDockerRegistry:
+  dockerconfigjson: 
